@@ -1,4 +1,13 @@
-export const links = [
+type LinksType = {
+  imgUrl: string;
+  url: string;
+  title: string;
+  category: string;
+  description: string;
+  id: string;
+};
+
+export const links: LinksType[] = [
   {
     category: "Open Source",
     description: "Fullstack React framework",
