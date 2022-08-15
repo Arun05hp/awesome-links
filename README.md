@@ -2,6 +2,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+- copy .env.example to .env (this file is included in the .gitignore so will not be committed)
+  - either: set the database url to point to an existing postgres database
+  - or: keep the database url as set in the example and run `npm dev:db`
+
 First, run the development server:
 
 ```bash
