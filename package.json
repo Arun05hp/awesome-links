@@ -6,8 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "dev:db": "docker run --name awesome-links-postgres --env POSTGRES_USER=awesome-links --env POSTGRES_PASSWORD=password --publish 127.0.0.1:5432:5432 --detach --restart unless-stopped postgres",
-    "lint": "next lint"
+    "dev:db": "docker run --name awesome-links-postgres --env POSTGRES_USER=awesome-links --env POSTGRES_PASSWORD=password --publish 127.0.0.1:5432:5432 --detach --restart unless-stopped postgres"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^4.2.1",
