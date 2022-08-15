@@ -1,11 +1,16 @@
+import type { NextApiRequest, NextApiResponse } from "next";
 import { ApolloServer } from "apollo-server-micro";
 import { typeDefs } from "../../graphl/schema";
 import { resolvers } from "../../graphl/resolvers";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { createContext } from "../../graphl/context";
 import Cors from "micro-cors";
 
 const cors = Cors();
-const apolloServer = new ApolloServer({ typeDefs, resolvers });
+const apolloServer = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: createContext,
+});
 
 const startServer = apolloServer.start();
 
