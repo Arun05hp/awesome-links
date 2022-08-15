@@ -75,23 +75,53 @@ export const LinksQuery = extendType({
         after: stringArg(),
       },
       async resolve(_, args, ctx) {
-        return {
-          edges: [
-            {
-              cursor: "",
-              node: {
-                title: "",
-                category: "",
-                imgUrl: "",
-                url: "",
-                description: "",
-              },
+        let queryResults = null;
+
+        if (args.after) {
+          queryResults = await ctx.prisma.link.findMany({
+            take: args.first,
+            skip: 1,
+            cursor: {
+              id: args.after,
             },
-          ],
+          });
+        } else {
+          queryResults = await ctx.prisma.link.findMany({
+            take: args.first,
+          });
+        }
+
+        if (queryResults.length > 0) {
+          const lastLinkResults = queryResults.at(-1);
+
+          const myCursor = lastLinkResults.id;
+
+          const secondQueryResults = await ctx.prisma.link.findMany({
+            take: args.first,
+            cursor: {
+              id: myCursor,
+            },
+          });
+
+          const result = {
+            pageInfo: {
+              endCursor: myCursor,
+              hasNextPage: secondQueryResults.length >= args.first,
+            },
+            edges: queryResults.map((link) => ({
+              cursor: link.id,
+              node: link,
+            })),
+          };
+
+          return result;
+        }
+        return {
           pageInfo: {
-            endCursor: "",
+            endCursor: null,
             hasNextPage: false,
           },
+          edges: [],
         };
       },
     });
