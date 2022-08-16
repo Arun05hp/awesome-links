@@ -6,6 +6,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
   - either: set the database url to point to an existing postgres database
   - or: keep the database url as set in the example and run `npm dev:db`
 
+![Home Page](assets/images/home.png)
+
+![User Home Page](assets/images/auth-login.png)
+
+![Create Link](assets/images/create-link.png)
+
 First, run the development server:
 
 ```bash

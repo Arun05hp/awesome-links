@@ -31,12 +31,7 @@ const CreateLinkMutation = gql`
 `;
 
 const Admin = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const [createLink, { loading, error }] = useMutation(CreateLinkMutation, {
     onCompleted: () => reset(),
