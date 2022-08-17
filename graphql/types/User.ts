@@ -9,7 +9,7 @@ export const User = objectType({
     t.string("email");
     t.string("image");
     t.field("role", { type: Role });
-    t.list.field("favorites", {
+    t.list.field("bookmarks", {
       type: Link,
       async resolve(_parent, _args, ctx) {
         return await ctx.prisma.user
@@ -18,7 +18,7 @@ export const User = objectType({
               id: _parent.id,
             },
           })
-          .favorites();
+          .bookmarks();
       },
     });
   },
@@ -29,10 +29,10 @@ const Role = enumType({
   members: ["USER", "ADMIN"],
 });
 
-export const UserFavorites = extendType({
+export const Userbookmarks = extendType({
   type: "Query",
   definition(t) {
-    t.list.field("favorites", {
+    t.list.field("bookmarks", {
       type: "Link",
       async resolve(_, _args, ctx) {
         const user = await ctx.prisma.user.findUnique({
@@ -40,11 +40,11 @@ export const UserFavorites = extendType({
             email: ctx.user.email,
           },
           include: {
-            favorites: true,
+            bookmarks: true,
           },
         });
         if (!user) throw new Error("Invalid user");
-        return user.favorites;
+        return user.bookmarks;
       },
     });
   },
@@ -68,7 +68,7 @@ export const BookmarkLink = extendType({
             email: ctx.user.email,
           },
           data: {
-            favorites: {
+            bookmarks: {
               connect: {
                 id: link.id,
               },

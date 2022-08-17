@@ -195,7 +195,7 @@ export const UpdateLinkMutation = extendType({
         id: stringArg(),
         title: stringArg(),
         url: stringArg(),
-        imageUrl: stringArg(),
+        imgUrl: stringArg(),
         category: stringArg(),
         description: stringArg(),
       },
@@ -205,7 +205,7 @@ export const UpdateLinkMutation = extendType({
           data: {
             title: args.title,
             url: args.url,
-            imageUrl: args.imageUrl,
+            imgUrl: args.imgUrl,
             category: args.category,
             description: args.description,
           },
