@@ -167,3 +167,67 @@ export const CreateLinkMutation = extendType({
     });
   },
 });
+
+export const LinkByIDQuery = extendType({
+  type: "Query",
+  definition(t) {
+    t.nonNull.field("link", {
+      type: "Link",
+      args: { id: nonNull(stringArg()) },
+      resolve(_parent, args, ctx) {
+        const link = ctx.prisma.link.findUnique({
+          where: {
+            id: args.id,
+          },
+        });
+        return link;
+      },
+    });
+  },
+});
+
+export const UpdateLinkMutation = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.nonNull.field("updateLink", {
+      type: "Link",
+      args: {
+        id: stringArg(),
+        title: stringArg(),
+        url: stringArg(),
+        imageUrl: stringArg(),
+        category: stringArg(),
+        description: stringArg(),
+      },
+      resolve(_parent, args, ctx) {
+        return ctx.prisma.link.update({
+          where: { id: args.id },
+          data: {
+            title: args.title,
+            url: args.url,
+            imageUrl: args.imageUrl,
+            category: args.category,
+            description: args.description,
+          },
+        });
+      },
+    });
+  },
+});
+// // delete Link
+export const DeleteLinkMutation = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.nonNull.field("deleteLink", {
+      type: "Link",
+      args: {
+        id: nonNull(stringArg()),
+      },
+      resolve(_parent, args, ctx) {
+        return ctx.prisma.link.delete({
+          where: { id: args.id },
+        });
+      },
+    });
+  },
+});

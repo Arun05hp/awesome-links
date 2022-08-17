@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { gql, useQuery } from "@apollo/client";
 import { AwesomeLink } from "../components/AwesomeLink";
+import Link from "next/link";
 
 const AllLinksQuery = gql`
   query allLinksQuery($first: Int, $after: String) {
@@ -48,15 +49,19 @@ const Home: NextPage = () => {
       <div className="container mx-auto max-w-5xl my-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {data?.links.edges.map(({ node }) => (
-            <AwesomeLink
-              key={node.id}
-              id={node.id}
-              title={node.title}
-              url={node.url}
-              imgUrl={node.imgUrl}
-              category={node.category}
-              description={node.description}
-            />
+            <Link href={`/link/${node.id}`} key={node.id}>
+              <a>
+                <AwesomeLink
+                  key={node.id}
+                  id={node.id}
+                  title={node.title}
+                  url={node.url}
+                  imgUrl={node.imgUrl}
+                  category={node.category}
+                  description={node.description}
+                />
+              </a>
+            </Link>
           ))}
         </div>
         {hasNextPage ? (
